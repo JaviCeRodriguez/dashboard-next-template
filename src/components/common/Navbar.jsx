@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import {
   Box,
   Flex,
@@ -19,20 +20,35 @@ import {
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
-const Links = ['Dashboard', 'Projects', 'Team'];
+const Links = [
+  {
+    path: '/',
+    name: 'Dashboard',
+  },
+  {
+    path: '/usuarios',
+    name: 'Usuarios',
+  },
+  {
+    path: '/productos',
+    name: 'Productos',
+  }
+];
 
-const NavLink = ({ children }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-    href={'#'}>
-    {children}
-  </Link>
+const NavLink = ({ to, children }) => (
+  <NextLink href={to} passHref>
+    <Link
+      px={2}
+      py={1}
+      rounded={'md'}
+      _hover={{
+        textDecoration: 'none',
+        bg: useColorModeValue('gray.200', 'gray.700'),
+      }}
+    >
+        {children}
+    </Link>
+  </NextLink>
 );
 
 const Navbar = () => {
@@ -56,8 +72,8 @@ const Navbar = () => {
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {Links.map(({ path, name }) => (
+                <NavLink key={name} to={path}>{name}</NavLink>
               ))}
             </HStack>
           </HStack>
